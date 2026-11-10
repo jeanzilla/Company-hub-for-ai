@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/* Hub design: light, plain and with a single accent color (docs/DESIGN.md).
+   No literal colors in the pages: everything comes from these variables. hub.config.ts sets the accent. */
+:root {
+  --accent: #2f5fd0;
+  --bg: #f7f8fa; --surface: #ffffff; --surface-2: #f3f4f6;
+  --line: #e5e7eb; --line-strong: #d1d5db;
+  --ink: #1d212c; --body: #2a2e34; --muted: #6b7280; --faint: #9ca3af;
+  --ok: #15803d; --ok-bg: #ecfdf3;
+  --warn: #b45309; --warn-bg: #fffbeb;
+  --bad: #b91c1c; --bad-bg: #fef2f2;
+  --accent-strong: color-mix(in srgb, var(--accent) 80%, #000);
+  --accent-soft: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111318; --surface: #181b22; --surface-2: #20242d;
+    --line: #2a2f3a; --line-strong: #3a4150;
+    --ink: #f1f3f7; --body: #d9dde5; --muted: #9aa3b2; --faint: #6f7888;
+    --ok: #4ade80; --ok-bg: #12281b;
+    --warn: #fbbf24; --warn-bg: #2a2110;
+    --bad: #f87171; --bad-bg: #2c1516;
+    --accent-strong: color-mix(in srgb, var(--accent) 70%, #fff);
+    --accent-soft: color-mix(in srgb, var(--accent) 18%, var(--surface));
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--bg); --color-surface: var(--surface); --color-surface-2: var(--surface-2);
+  --color-line: var(--line); --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink); --color-body: var(--body); --color-muted: var(--muted); --color-faint: var(--faint);
+  --color-accent: var(--accent); --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok); --color-warn: var(--warn); --color-bad: var(--bad);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html { background: var(--bg); }
+body { color: var(--body); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { color: var(--ink); text-wrap: balance; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+@layer components {
+  /* Card: 1 px border, no shadow. Never a card inside another card. */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  .card-pad { padding: 16px 18px; }
+
+  .page-title { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .page-subtitle { color: var(--muted); font-size: 13.5px; margin-top: 2px; max-width: 70ch; }
+  .section-title { font-size: 15px; font-weight: 600; }
+  .micro { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; color: var(--faint); }
+  .num { font-variant-numeric: tabular-nums; }
+  .mono { font-family: var(--font-mono); font-size: 12.5px; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; padding: 0 12px;
+    border-radius: 7px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+    font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; text-decoration: none; transition: background 150ms, border-color 150ms; }
+  .btn:hover { background: var(--surface-2); }
+  .btn:disabled { opacity: 0.55; cursor: default; }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  .btn-danger { color: var(--bad); }
+  .btn-danger:hover { background: var(--bad-bg); border-color: var(--bad); }
+  .btn-ghost { border-color: transparent; background: transparent; color: var(--muted); padding: 0 8px; }
+  .btn-ghost:hover { color: var(--ink); }
+
+  .label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 4px; }
+  .field { width: 100%; min-height: 34px; padding: 6px 10px; border-radius: 7px; border: 1px solid var(--line-strong);
+    background: var(--surface); color: var(--ink); font-size: 13.5px; }
+  .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .field::placeholder { color: var(--faint); }
+  textarea.field { min-height: 72px; resize: vertical; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
+    background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+  .chip::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+  .chip-ok { background: var(--ok-bg); color: var(--ok); }
+  .chip-warn { background: var(--warn-bg); color: var(--warn); }
+  .chip-bad { background: var(--bad-bg); color: var(--bad); }
+  .chip-accent { background: var(--accent-soft); color: var(--accent-strong); }
+  .chip-plain::before { display: none; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--faint);
+    padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: 0; }
+  .data-table tbody tr:hover { background: var(--surface-2); }
+  .table-wrap { overflow-x: auto; }
+
+  .notice { border-radius: 8px; padding: 10px 14px; font-size: 13.5px; border: 1px solid var(--line); background: var(--surface); }
+  .notice-ok { background: var(--ok-bg); border-color: transparent; color: var(--ok); }
+  .notice-bad { background: var(--bad-bg); border-color: transparent; color: var(--bad); }
+  .notice-warn { background: var(--warn-bg); border-color: transparent; color: var(--warn); }
+
+  .empty-state { text-align: center; color: var(--muted); padding: 36px 20px; font-size: 13.5px; }
+  .secret-box { font-family: var(--font-mono); font-size: 12.5px; background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 7px; padding: 10px 12px; overflow-wrap: anywhere; user-select: all; color: var(--ink); }
+
+  details.collapsible > summary { cursor: pointer; list-style: none; }
+  details.collapsible > summary::-webkit-details-marker { display: none; }
+
+  .menu-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 7px; font-size: 13.5px; font-weight: 500;
+    color: var(--muted); text-decoration: none; }
+  .menu-item:hover { background: var(--surface-2); color: var(--ink); }
+  .menu-item[aria-current="page"] { background: var(--surface-2); color: var(--ink); }
+  .menu-item[aria-current="page"] svg { color: var(--accent); }
+}
+
+/* On phones, 16 px fields so iOS does not zoom the page when one is tapped. */
+@media (max-width: 767px) { .field { font-size: 16px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

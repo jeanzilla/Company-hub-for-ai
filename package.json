@@ -1,0 +1,43 @@
+{
+  "name": "company-hub-for-ai",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "migrate": "node scripts/migrate.mjs",
+    "demo": "node scripts/demo.mjs",
+    "admin": "node scripts/admin.mjs"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "postgres": "^3.4.9",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "@electric-sql/pglite-socket": "^0.2.19",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "postcss": "^8.5.32",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "description": "Template for an internal company hub: people and roles, connectors with encrypted secrets, devices, a log and an MCP server for each employee's AI."
+}

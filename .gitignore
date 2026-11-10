@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+.vercel/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+next-env.d.ts
+*.tsbuildinfo
+
+# Demo database created by "npm run demo"
+.demo/
